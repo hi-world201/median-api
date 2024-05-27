@@ -6,9 +6,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { UsersModule } from 'src/users/users.module';
 import { JwtStrategy } from './jwt.strategy';
-
 export const jwtSecret = 'this-is-a-secret-key';
-
 @Module({
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],
@@ -17,9 +15,9 @@ export const jwtSecret = 'this-is-a-secret-key';
     PassportModule,
     JwtModule.register({
       secret: jwtSecret,
-      signOptions: { expiresIn: '5m' }
+      signOptions: { expiresIn: '5m' },
     }),
-    UsersModule
+    UsersModule,
   ],
 })
-export class AuthModule { }
+export class AuthModule {}

@@ -6,20 +6,21 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ArticlesService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
   async create(createArticleDto: CreateArticleDto) {
-    return new ArticleEntity(await this.prisma.article.create({
-      data: createArticleDto
-    }));
+    return new ArticleEntity(
+      await this.prisma.article.create({
+        data: createArticleDto,
+      }),
+    );
   }
 
   async findAll() {
     const articles = await this.prisma.article.findMany({
       where: {
         published: true,
-      }
+      },
     });
-
     return articles.map((article) => new ArticleEntity(article));
   }
 
@@ -27,29 +28,34 @@ export class ArticlesService {
     const articles = await this.prisma.article.findMany({
       where: {
         published: false,
-      }
+      },
     });
-
     return articles.map((article) => new ArticleEntity(article));
   }
 
   async findOne(id: number) {
-    return new ArticleEntity(await this.prisma.article.findUnique({
-      where: { id },
-      include: {
-        author: true,
-      },
-    }));
+    return new ArticleEntity(
+      await this.prisma.article.findUnique({
+        where: { id },
+        include: {
+          author: true,
+        },
+      }),
+    );
   }
 
   async update(id: number, updateArticleDto: UpdateArticleDto) {
-    return new ArticleEntity(await this.prisma.article.update({
-      where: { id },
-      data: updateArticleDto
-    }));
+    return new ArticleEntity(
+      await this.prisma.article.update({
+        where: { id },
+        data: updateArticleDto,
+      }),
+    );
   }
 
   async remove(id: number) {
-    return new ArticleEntity(await this.prisma.article.delete({ where: { id } }));
+    return new ArticleEntity(
+      await this.prisma.article.delete({ where: { id } }),
+    );
   }
 }

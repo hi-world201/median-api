@@ -14,15 +14,22 @@ datasource db {
 }
 
 model Article {
-  id          Int      @id @default(autoincrement())
-  title       String   @unique @db.VarChar(255)
+  id          Int        @id @default(autoincrement())
+  title       String     @unique @db.VarChar(255)
   description String?
   body        String
-  published   Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  author      User?    @relation(fields: [authorId], references: [id])
+  published   Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  author      User?      @relation(fields: [authorId], references: [id])
   authorId    Int?
+  categories  Category[]
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  title    String    @unique @db.VarChar(50)
+  articles Article[]
 }
 
 model User {
